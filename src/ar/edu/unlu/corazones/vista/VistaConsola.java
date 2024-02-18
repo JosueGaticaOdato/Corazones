@@ -169,5 +169,20 @@ public class VistaConsola implements IVista {
 		this.controlador = controlador;
 	}
 
+	public void jugador2deTrebol() {
+		//Mostrar cartas en mesa
+		combinacionRondaJugada();
+		System.out.println("Es el turno del jugador: "
+				+ this.controlador.jugadorActual()); //Digo quien tiene que jugar
+		continuar();
+		limpiarPantalla(lineas);
+		combinacionRondaJugada();
+		System.out.println("Como el jugador tiene el 2 de trebol, el comienza la jugada");
+		System.out.println("---------- CARTAS EN MESA -------------");
+		System.out.println(this.controlador.cartasEnMesa());
+		continuar();
+		limpiarPantalla(lineas);
+	}
+
 
 }

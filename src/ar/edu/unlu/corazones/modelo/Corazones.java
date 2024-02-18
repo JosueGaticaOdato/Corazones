@@ -12,7 +12,7 @@ public class Corazones implements Observable{
 	//                        CONSTANTES
 	// *************************************************************
 	
-	private static final int cantCartasRepartidas = 2; //TESTING
+	private static final int cantCartasRepartidas = 13; //TESTING
 	private static final int cantCartasIntercambio = 1; //TESTING
 	private static final int puntajeMaximo = 50; //TESTING
 	private static final int cantJugadores = 4;
@@ -81,28 +81,93 @@ public class Corazones implements Observable{
 			mazo = new Mazo();
 			repartirCartas();
 			//pasajeDeCartas();
-			for (int j = 0; j < cantCartasRepartidas; j++) {
+			for (int j = 0; j < cantCartasRepartidas; j++) { //Abarco las 13 jugadas de esta ronda
 				int i = 0;
 				Jugada jugada = new Jugada(this.jugadores);
 				jugadas.add(jugada);
-				while (i < jugadores.length) {
+				if (j == 0) { //Primer jugada, donde se inicia con el 2 de trebol
+					primercarta2Trebol(jugada);
+					i++; //Aumento i porque ya jugo uno de los jugadores
+				}
+				while (i < jugadores.length) { //Recorro todos los jugadores
 					notificar(EventosCorazones.PEDIR_CARTA);
 					jugada.tirarCartaEnMesa(turno, cartaAJugar);
 					turno = (turno + 1) % jugadores.length; //Obtengo el siguiente jugador	
 					i++;
 				}
-				jugada.determinarPerdedor();
+				//Determino el perdedor de esta jugada, obteniendo el siguiente a jugar
+				turno = jugada.determinarPerdedor();
 				notificar(EventosCorazones.GANADOR_JUGADA);
 			}
+			//Finalizada la ronda, se comprueba si se llego al puntaje maxio para finalizar el juego
 			if (puntajeMaximoActual() >= puntajeMaximo) {
 				juegoTerminado = true; 
 			}
 			Jugada.reiniciarContadorJugadas();
 			ronda++;
 		}
+		//Fin del juego, determino al ganador
 		determinarGanador();
 		notificar(EventosCorazones.FIN_DE_JUEGO);
 	}
+	
+	//Obtener puntaje maximo de jugadores (para comprobar si supero el max establecido)
+	private int puntajeMaximoActual() {
+		int max = 0;
+		for (Jugador jugadoresCorazones : jugadores) {
+			if (max <= jugadoresCorazones.getPuntaje()) {
+				max = jugadoresCorazones.getPuntaje();
+			}
+		}
+		return max;
+	}
+	
+	//Metodo que determina quien gano el juego
+	private void determinarGanador() {
+		int minPuntaje = 100;
+		for (int i = 0; i < cantJugadores; i++) {
+			if (minPuntaje >= jugadores[i].getPuntaje()) {
+				minPuntaje = jugadores[i].getPuntaje();
+				this.posJugadorGanador = i;
+			}
+		}
+	}
+	
+	// *************************************************************
+	//                 FUNCIONALIDAD JUGADAS
+	// *************************************************************	
+	
+	//Metodo para que el jugador que tiene el 2 de trebol tire la carta
+	private void primercarta2Trebol(Jugada jugada) {
+    	boolean encontrado = false;
+    	int pos = 0;
+    	while (!encontrado && pos < jugadores.length) {
+    		int dosTrebol = jugadores[pos].tieneDosDeTrebol();
+    		if (dosTrebol != -1) {
+    			encontrado = true;
+    			turno = pos;
+    			jugada.tirarCartaEnMesa(turno, jugadores[pos].tirarCarta(dosTrebol)); //Tira el 2 de trebol
+    			notificar(EventosCorazones.JUGO_2_DE_TREBOL);
+    			turno = (turno + 1) % jugadores.length;;
+    		} else {
+    			pos++;
+    		}
+    	}
+	}
+	
+	//Metodo que me dice las cartas que puede jugar el jugador
+	public String cartasPosiblesAJugar() {
+		return jugadores[turno].mostrarMano();
+	}
+	
+	//Metodo para guardar la carta que va a ser jugada en mesa
+	public void jugarCarta(int i) {
+		cartaAJugar = jugadores[turno].tirarCarta(i);
+	}
+	
+	// *************************************************************
+	//                  FUNCIONALIDAD RONDA
+	// *************************************************************
 	
 	//Metodo que reparte las cartas a cada jugador, como se hace de forma habitual
 	//1 1 1 1, 2 2 2 2, 3 3 3 3, etc.
@@ -130,38 +195,7 @@ public class Corazones implements Observable{
 		}
 		return hayEspacio;
 	}
-	
-	//Obtener puntaje maximo de jugadores (para comprobar si supero el max establecido)
-	private int puntajeMaximoActual() {
-		int max = 0;
-		for (Jugador jugadoresCorazones : jugadores) {
-			if (max <= jugadoresCorazones.getPuntaje()) {
-				max = jugadoresCorazones.getPuntaje();
-			}
-		}
-		return max;
-	}
-	
-	//Metodo que determina quien gano el juego
-	private void determinarGanador() {
-		int minPuntaje = 100;
-		for (int i = 0; i < cantJugadores; i++) {
-			if (minPuntaje >= jugadores[i].getPuntaje()) {
-				minPuntaje = jugadores[i].getPuntaje();
-				this.posJugadorGanador = i;
-			}
-		}
-	}
-	
-	//Metodo que me dice las cartas que puede jugar el jugador
-	public String cartasPosiblesAJugar() {
-		return jugadores[turno].mostrarMano();
-	}
-	
-	//Metodo para guardar la carta que va a ser jugada en mesa
-	public void jugarCarta(int i) {
-		cartaAJugar = jugadores[turno].tirarCarta(i);
-	}
+
 	
 	// *************************************************************
 	//                      	GETTERS

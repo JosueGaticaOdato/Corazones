@@ -1,7 +1,5 @@
 package ar.edu.unlu.corazones.modelo;
 
-import java.util.ArrayList;
-
 public class Jugada {
 	
 	// *************************************************************
@@ -71,7 +69,7 @@ public class Jugada {
 	}
 	
 	//Metodo que determina el ganador de esta jugada
-	public void determinarPerdedor() {
+	public int determinarPerdedor() {
 		//Obtengo palo y valor de la primer carta jugada
 		Palo paloMejorCarta = primeraCartaJugada.getPalo();
 		int valorMejorCarta = primeraCartaJugada.getValor();
@@ -91,6 +89,7 @@ public class Jugada {
 		}
 		contarPuntos(posicionPerdedor); //Agrego los puntos al perdedor
 		jugadorPerdedor = jugadores[posicionPerdedor]; //Retorno posicion del ganador
+		return posicionPerdedor;
 	}
 	
 	//Metodo que le agrega los puntos al jugador perdedor

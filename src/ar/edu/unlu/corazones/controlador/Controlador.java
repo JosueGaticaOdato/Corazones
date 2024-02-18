@@ -91,6 +91,9 @@ public class Controlador implements Observador{
 			case FIN_DE_JUEGO:
 				this.vista.ganadorJuego();
 				break;
+			case JUGO_2_DE_TREBOL:
+				this.vista.jugador2deTrebol();
+				break;
 		}}
 		
 	}
