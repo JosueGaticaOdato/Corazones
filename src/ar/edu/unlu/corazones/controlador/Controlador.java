@@ -76,6 +76,10 @@ public class Controlador implements Observador{
 	public String direccionPasaje() {
 		return this.modelo.getDireccionPasaje();
 	}
+
+	public void cartaJugadaPasaje(int i) {
+		this.modelo.jugarCartaPasaje(i);
+	}
 	
 	// *************************************************************
 	//                    DESDE MODELO A VISTA
@@ -103,9 +107,13 @@ public class Controlador implements Observador{
 			case PEDIR_CARTA_PASAJE:
 				this.vista.pedirCartaPasaje();
 				break;
+			case CARTA_TIRADA_INCORRECTA:
+				this.vista.cartaTiradaIncorrecta();
+				break;
 		}}
 		
 	}
+
 
 
 

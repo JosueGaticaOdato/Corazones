@@ -83,7 +83,7 @@ public class Corazones implements Observable{
 		while (!juegoTerminado) {
 			mazo = new Mazo();
 			repartirCartas();
-			pasajeDeCartas();
+			//pasajeDeCartas();
 			for (int j = 0; j < cantCartasRepartidas; j++) { //Abarco las 13 jugadas de esta ronda
 				int i = 0;
 				Jugada jugada = new Jugada(this.jugadores);
@@ -94,9 +94,13 @@ public class Corazones implements Observable{
 				}
 				while (i < jugadores.length) { //Recorro todos los jugadores
 					notificar(EventosCorazones.PEDIR_CARTA);
-					jugada.tirarCartaEnMesa(turno, cartaAJugar);
-					turno = (turno + 1) % jugadores.length; //Obtengo el siguiente jugador	
-					i++;
+					if (jugada.tirarCartaEnMesa(turno, cartaAJugar)) { //Si jugo la carta correcta
+						jugadores[turno].tirarCarta(i);
+						turno = (turno + 1) % jugadores.length; //Obtengo el siguiente jugador	
+						i++;
+					} else {
+						notificar(EventosCorazones.CARTA_TIRADA_INCORRECTA);
+					}
 				}
 				//Determino el perdedor de esta jugada, obteniendo el siguiente a jugar
 				turno = jugada.determinarPerdedor();
@@ -160,12 +164,12 @@ public class Corazones implements Observable{
 	
 	//Metodo que me dice las cartas que puede jugar el jugador
 	public String cartasPosiblesAJugar() {
-		return jugadores[turno].mostrarMano();
+		return jugadores[turno].cartasJugables(jugadas.get(jugadas.size() - 1).getPrimeraCarta());
 	}
 	
 	//Metodo para guardar la carta que va a ser jugada en mesa
 	public void jugarCarta(int i) {
-		cartaAJugar = jugadores[turno].tirarCarta(i);
+		cartaAJugar = jugadores[turno].obtenerCarta(i);
 	}
 	
 	// *************************************************************
@@ -298,6 +302,10 @@ public class Corazones implements Observable{
 		}
 	}
 
+	//Metodo para jugar la carta cuando se realize el pasaje
+	public void jugarCartaPasaje(int i) {
+		cartaAJugar = jugadores[turno].tirarCarta(i);
+	}
 	
 	// *************************************************************
 	//                      	GETTERS
@@ -353,6 +361,7 @@ public class Corazones implements Observable{
 		
 	}
 	
+	//Getter para obtener la cantidad de cartas que se pueden pasar
 	public String getCantCartasPasaje() {
 		return String.valueOf(cantCartasIntercambio);
 	}
@@ -373,6 +382,8 @@ public class Corazones implements Observable{
 	public void agregarObservador(Observador observador) {
 		this.observadores.add(observador);
 	}
+
+
 
 
 }

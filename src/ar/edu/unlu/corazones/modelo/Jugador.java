@@ -76,6 +76,24 @@ public class Jugador {
     	}
         return pos;
     }
+    
+    //Metodo que me dice cuales cartas puede tirar el jugador en la mesa
+    public String cartasJugables(Carta primeraCarta) {
+		String s = "";
+		if (primeraCarta == null) {
+			s = mostrarMano();
+		} else {
+		for (int i = 0; i < mano.size() ; i++){
+			Carta carta = mano.get(i);
+			s += (i+1) + ") " + carta.mostrarCarta();
+			if (carta.getPalo() != primeraCarta.getPalo()) {
+				s += " X";
+			}
+			s += "\n";
+		 }
+		}
+		return s;
+    }
 
 	
 	// *************************************************************

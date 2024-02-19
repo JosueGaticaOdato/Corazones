@@ -47,12 +47,19 @@ public class Jugada {
 	// *************************************************************
 	
 	//Metodo que realiza la tirada de la carta por parte del jugador a la mesa
-	public void tirarCartaEnMesa(int turnoProx, Carta cartaEnJuego) {
+	public boolean tirarCartaEnMesa(int turnoProx, Carta cartaEnJuego) {
+		boolean isCartaValida = false;
+		//Primera caso que la carta sea valida para tirar: Es la primera
 		if(primeraCarta()) {
 			primeraCartaJugada = cartaEnJuego;
+			isCartaValida = true;
 		}
-		
-		this.cartasJugadas[turnoProx] = cartaEnJuego;
+		//Segundo caso para que la carta sea valida, tiene que ser del mismo palo que la primera
+		if(cartaEnJuego.getPalo() == primeraCartaJugada.getPalo() || isCartaValida) {
+			this.cartasJugadas[turnoProx] = cartaEnJuego;
+			isCartaValida = true;
+		}
+		return isCartaValida;
 	}
 	
 	//Metodo que determina si es la primera carta jugada: Es fundamental ya que el palo de esta determinada cual es la carta mas alta
@@ -145,6 +152,11 @@ public class Jugada {
 	//Metodo que me dice el nombre del jugador perdedor
 	public String getPerdedorJugada() {
 		return this.jugadorPerdedor.getNombre();
+	}
+	
+
+	public Carta getPrimeraCarta() {
+		return this.primeraCartaJugada;
 	}
 	
 	

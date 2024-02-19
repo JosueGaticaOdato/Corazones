@@ -128,6 +128,7 @@ public class VistaConsola implements IVista {
 		System.out.println("---------- CARTAS EN MESA -------------");
 		System.out.println(this.controlador.cartasEnMesa());
 		System.out.println(this.controlador.mostrarCartasPosiblesATirar());
+		System.out.println("Con (X), las cartas que NO se puede jugar en esta mesa");
 		System.out.println("Elija una carta");
 		int posCarta = entrada.nextInt();
 		controlador.cartaJugada(posCarta - 1); //Paso la carta
@@ -203,7 +204,17 @@ public class VistaConsola implements IVista {
 		System.out.println(this.controlador.mostrarCartasPosiblesATirar());
 		System.out.println("Elija una carta");
 		int posCarta = entrada.nextInt();
-		controlador.cartaJugada(posCarta - 1); //Paso la carta
+		controlador.cartaJugadaPasaje(posCarta - 1); //Paso la carta
+		continuar();
+	}
+	
+	// *************************************************************
+	//               CARTA TIRADA INCORRECTA
+	// *************************************************************
+	
+	public void cartaTiradaIncorrecta() {
+		System.out.println("No puedes tirar esa carta ya que no corresponde con el mismo palo de la misma carta tirada");
+		System.out.println("Repite tu jugada...");
 		continuar();
 	}
 
@@ -212,4 +223,5 @@ public class VistaConsola implements IVista {
 	public void setControlador(Controlador controlador) {
 		this.controlador = controlador;
 	}
+
 }
