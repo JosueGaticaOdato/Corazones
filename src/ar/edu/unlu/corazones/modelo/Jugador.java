@@ -56,6 +56,24 @@ public class Jugador {
 		return cartaTirada;
 	}
 	
+	//Tirar carta a traves de la Carta que tiene 
+	public int buscarCarta(Carta carta) {
+    	boolean cartaEncontrada = false;
+    	int pos = 0;
+    	while (!cartaEncontrada && pos < mano.size()) {
+    		if (mano.get(pos).getPalo() == carta.getPalo() && mano.get(pos).getValor() == carta.getValor())  {
+    			cartaEncontrada = true;
+    		} else {
+    			pos++;
+    		}
+    	}
+    	if (!cartaEncontrada) {
+    		pos = -1;
+    	}
+        return pos;
+	}
+	
+	
 	// *************************************************************
 	//                 FUNCION EN CORAZONES
 	// *************************************************************

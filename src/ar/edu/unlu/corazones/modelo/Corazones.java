@@ -96,7 +96,7 @@ public class Corazones implements Observable{
 					notificar(EventosCorazones.PEDIR_CARTA);
 					boolean tieneOtraCartaParaJugar = jugadores[turno].tieneCartasDelMismoPalo(jugada.getPrimeraCarta());
 					if (jugada.tirarCartaEnMesa(turno, cartaAJugar,tieneOtraCartaParaJugar)) { //Si jugo la carta correcta
-						jugadores[turno].tirarCarta(i);
+						jugadores[turno].tirarCarta(jugadores[turno].buscarCarta(cartaAJugar));
 						turno = (turno + 1) % jugadores.length; //Obtengo el siguiente jugador	
 						i++;
 					} else {
