@@ -47,15 +47,15 @@ public class Jugada {
 	// *************************************************************
 	
 	//Metodo que realiza la tirada de la carta por parte del jugador a la mesa
-	public boolean tirarCartaEnMesa(int turnoProx, Carta cartaEnJuego) {
+	public boolean tirarCartaEnMesa(int turnoProx, Carta cartaEnJuego, boolean puedeTirarOtraCarta) {
 		boolean isCartaValida = false;
 		//Primera caso que la carta sea valida para tirar: Es la primera
 		if(primeraCarta()) {
 			primeraCartaJugada = cartaEnJuego;
 			isCartaValida = true;
 		}
-		//Segundo caso para que la carta sea valida, tiene que ser del mismo palo que la primera
-		if(cartaEnJuego.getPalo() == primeraCartaJugada.getPalo() || isCartaValida) {
+		//Segundo caso para que la carta sea valida: tiene que ser del mismo palo o no le queda otra del mismo palo
+		if(cartaEnJuego.getPalo() == primeraCartaJugada.getPalo() || isCartaValida || (!puedeTirarOtraCarta)) {
 			this.cartasJugadas[turnoProx] = cartaEnJuego;
 			isCartaValida = true;
 		}

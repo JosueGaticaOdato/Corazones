@@ -94,7 +94,8 @@ public class Corazones implements Observable{
 				}
 				while (i < jugadores.length) { //Recorro todos los jugadores
 					notificar(EventosCorazones.PEDIR_CARTA);
-					if (jugada.tirarCartaEnMesa(turno, cartaAJugar)) { //Si jugo la carta correcta
+					boolean tieneOtraCartaParaJugar = jugadores[turno].tieneCartasDelMismoPalo(jugada.getPrimeraCarta());
+					if (jugada.tirarCartaEnMesa(turno, cartaAJugar,tieneOtraCartaParaJugar)) { //Si jugo la carta correcta
 						jugadores[turno].tirarCarta(i);
 						turno = (turno + 1) % jugadores.length; //Obtengo el siguiente jugador	
 						i++;
@@ -153,7 +154,7 @@ public class Corazones implements Observable{
     		if (dosTrebol != -1) {
     			encontrado = true;
     			turno = pos;
-    			jugada.tirarCartaEnMesa(turno, jugadores[pos].tirarCarta(dosTrebol)); //Tira el 2 de trebol
+    			jugada.tirarCartaEnMesa(turno, jugadores[pos].tirarCarta(dosTrebol), false); //Tira el 2 de trebol
     			notificar(EventosCorazones.JUGO_2_DE_TREBOL);
     			turno = (turno + 1) % jugadores.length;;
     		} else {

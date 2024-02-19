@@ -80,12 +80,14 @@ public class Jugador {
     //Metodo que me dice cuales cartas puede tirar el jugador en la mesa
     public String cartasJugables(Carta primeraCarta) {
 		String s = "";
-		if (primeraCarta == null) {
+		//Si la primer carta es nula o no tiene otra carta del mismo palo por jugar, muestro mano completa
+		if (primeraCarta == null || !tieneCartasDelMismoPalo(primeraCarta)) {
 			s = mostrarMano();
 		} else {
 		for (int i = 0; i < mano.size() ; i++){
 			Carta carta = mano.get(i);
 			s += (i+1) + ") " + carta.mostrarCarta();
+			//Si son de distinto palo, no la puede tirar
 			if (carta.getPalo() != primeraCarta.getPalo()) {
 				s += " X";
 			}
@@ -94,6 +96,20 @@ public class Jugador {
 		}
 		return s;
     }
+    
+    //Consulta al jugador si, de las cartas que tiene en su mano, no tiene en mismo palo de la que esta en mesa
+	public Boolean tieneCartasDelMismoPalo(Carta carta) {
+    	boolean tieneMismoPalo = false;
+    	int pos = 0;
+    	while (!tieneMismoPalo && pos < mano.size() && carta != null) {
+    		if (mano.get(pos).getPalo() == carta.getPalo())  {
+    			tieneMismoPalo = true;
+    		} else {
+    			pos++;
+    		}
+    	}
+        return tieneMismoPalo;
+	}
 
 	
 	// *************************************************************
@@ -130,7 +146,6 @@ public class Jugador {
 	}
 
 	public void agregarPuntaje(int puntajeCarta) {
-		// TODO Auto-generated method stub
 		this.puntaje += puntajeCarta;
 	}
 	
