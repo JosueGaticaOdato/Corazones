@@ -59,7 +59,7 @@ public class VistaConsola implements IVista {
 	public void iniciar(){
 		boolean salir = false;
 		while(!salir) {
-			limpiarPantalla(lineas);
+			limpiarPantalla();
 			mostrarMenu();
 			int opcion = this.entrada.nextInt();
 			switch (opcion) {
@@ -91,12 +91,13 @@ public class VistaConsola implements IVista {
 	private void continuar() {
 		System.out.println("Escriba cualquier tecla para continuar...");
 		this.entrada.next();
+		limpiarPantalla();
 	}
 	
 	//Limpieza de pantalla (en realidad agrega lineas)
-	private void limpiarPantalla(int lineas)
+	private void limpiarPantalla()
 	{
-	 for (int i=0; i < lineas; i++)
+	 for (int i=0; i < this.lineas; i++)
 	 {
 	  System.out.println();
 	 }
@@ -109,7 +110,6 @@ public class VistaConsola implements IVista {
 	private void jugar() {
 		System.out.println("Juego comenzado!");
 		continuar();
-		limpiarPantalla(lineas);
 		controlador.comenzarJuego();
 	}
 	
@@ -123,15 +123,15 @@ public class VistaConsola implements IVista {
 		System.out.println("Es el turno del jugador: "
 				+ this.controlador.jugadorActual()); //Digo quien tiene que jugar
 		continuar();
-		limpiarPantalla(lineas);
 		combinacionRondaJugada();
+		System.out.println("---------- JUGADOR #" + this.controlador.jugadorActual() + " -------------");
 		System.out.println("---------- CARTAS EN MESA -------------");
 		System.out.println(this.controlador.cartasEnMesa());
 		System.out.println(this.controlador.mostrarCartasPosiblesATirar());
 		System.out.println("Elija una carta");
 		int posCarta = entrada.nextInt();
 		controlador.cartaJugada(posCarta - 1); //Paso la carta
-		limpiarPantalla(lineas);
+		continuar();
 	}
 	
 	// *************************************************************
@@ -145,7 +145,6 @@ public class VistaConsola implements IVista {
 		System.out.println("El perdedor de esta jugada es " + this.controlador.perdedorJugada() + "\n");
 		System.out.println(this.controlador.puntajesJugadores());
 		continuar();
-		limpiarPantalla(lineas);
 	}
 	
 	// *************************************************************
@@ -163,11 +162,9 @@ public class VistaConsola implements IVista {
 		System.out.println("---------- JUGADA #" + this.controlador.numeroJugada() + " -------------");
 	}
 	
-	//Metodo que setea el controlador
-	@Override
-	public void setControlador(Controlador controlador) {
-		this.controlador = controlador;
-	}
+	// *************************************************************
+	//               MOSTRAR QUIEN TIRO 2 TREBOL
+	// *************************************************************
 
 	public void jugador2deTrebol() {
 		//Mostrar cartas en mesa
@@ -175,14 +172,44 @@ public class VistaConsola implements IVista {
 		System.out.println("Es el turno del jugador: "
 				+ this.controlador.jugadorActual()); //Digo quien tiene que jugar
 		continuar();
-		limpiarPantalla(lineas);
 		combinacionRondaJugada();
 		System.out.println("Como el jugador tiene el 2 de trebol, el comienza la jugada");
 		System.out.println("---------- CARTAS EN MESA -------------");
 		System.out.println(this.controlador.cartasEnMesa());
 		continuar();
-		limpiarPantalla(lineas);
 	}
 
+	// *************************************************************
+	//                    PASAJE DE CARTAS
+	// *************************************************************
+	
+	public void pasajeDeCartas() {
+		System.out.println("---------- RONDA #" + this.controlador.numeroRonda() + " -------------");
+		System.out.println("---------- PASAJE DE CARTAS -------------");
+		System.out.println(this.controlador.direccionPasaje());
+		continuar();
+	}
+	
+	// *************************************************************
+	//               PEDIR CARTA (para pasaje)
+	// *************************************************************
 
+	public void pedirCartaPasaje() {
+		System.out.println("---------- RONDA #" + this.controlador.numeroRonda() + " -------------");
+		System.out.println("Es el turno del jugador: "
+				+ this.controlador.jugadorActual()); //Digo quien tiene que jugar
+		continuar();
+		System.out.println("---------- JUGADOR - " + this.controlador.jugadorActual() + " -------------");
+		System.out.println(this.controlador.mostrarCartasPosiblesATirar());
+		System.out.println("Elija una carta");
+		int posCarta = entrada.nextInt();
+		controlador.cartaJugada(posCarta - 1); //Paso la carta
+		continuar();
+	}
+
+	//Metodo que setea el controlador
+	@Override
+	public void setControlador(Controlador controlador) {
+		this.controlador = controlador;
+	}
 }

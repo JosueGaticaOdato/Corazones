@@ -14,7 +14,7 @@ public class Corazones implements Observable{
 	
 	private static final int cantCartasRepartidas = 13; //TESTING
 	private static final int cantCartasIntercambio = 1; //TESTING
-	private static final int puntajeMaximo = 50; //TESTING
+	private static final int puntajeMaximo = 12; //TESTING
 	private static final int cantJugadores = 4;
 	
 	// *************************************************************
@@ -35,6 +35,9 @@ public class Corazones implements Observable{
 	
 	//Turno del jugador actual
 	private int turno = 0; 
+	
+	//Direccion del pasaje de cartas
+	private Direccion direccion;
 	
 	//Atributo para guardar la carta a tirar por parte del jugador
 	private Carta cartaAJugar;
@@ -80,7 +83,7 @@ public class Corazones implements Observable{
 		while (!juegoTerminado) {
 			mazo = new Mazo();
 			repartirCartas();
-			//pasajeDeCartas();
+			pasajeDeCartas();
 			for (int j = 0; j < cantCartasRepartidas; j++) { //Abarco las 13 jugadas de esta ronda
 				int i = 0;
 				Jugada jugada = new Jugada(this.jugadores);
@@ -195,6 +198,105 @@ public class Corazones implements Observable{
 		}
 		return hayEspacio;
 	}
+	
+	// *************************************************************
+	//                  PASAJE DE CARTAS
+	// *************************************************************
+	
+	//Metodo que determina a donde se van a pasar las cartas
+	private void pasajeDeCartas() {
+		int variablePasaje = 0;
+		
+		// *************************************************************
+		//                     	 CASOS
+		// 1. Pasaje de 1: Se realiza el pasaje a la izquierda -> variablePasaje = 1
+		// 2. Pasaje de 2: Se realiza el pasaje al frente -> variablePasaje = 0
+		// 3. Pasaje de 3: Se realiza el pasaje a la derecha -> variablePasaje = -1 
+		// 4. Pasaje de 0: No hay pasaje
+		// **************************************************************
+		
+		//Determino a donde se van a pasar las cartas
+        switch (this.ronda) {
+            case 1: //Izq
+            	variablePasaje = 1;
+            	direccion = Direccion.Izquierda;
+                break;
+            case 2: //Frente
+            	variablePasaje = 2;
+            	direccion = Direccion.Frente;
+                break;
+            case 3: //Der
+            	variablePasaje = 3;
+            	direccion = Direccion.Derecha;
+                break;
+            // Caso 4: No hay intercambio
+            default:
+                break;
+        } 
+        notificar(EventosCorazones.PASAJE_DE_CARTAS);
+        if (variablePasaje != 0) {
+        	intercambioDeCartas(variablePasaje);
+        }
+	}
+	
+	//Metodo privado que realiza el intercambio
+	private void intercambioDeCartas(int valor) {
+		//Esto funciona para que el intercambio se haga sobre el final y los otros jugadores no tengan acceso a las cartas nuevas recibidas
+		ArrayList<Carta[]> arregloDeCartasAIntercambiar = new ArrayList<Carta[]>(cantJugadores);
+		
+		// Inicializar cada posición del ArrayList con un arreglo de Carta vacío
+		for (int i = 0; i < cantJugadores; i++) {
+		    arregloDeCartasAIntercambiar.add(new Carta[0]);
+		}
+		
+		//Recorro todos los jugadores
+		for (Jugador jugadorPasaje: jugadores) {
+			
+			//Obtengo la posicion del jugaodr actual y a quien le va a pasar las cartas
+			int posicionJugadorActual = buscarJugador(jugadorPasaje);
+			//Para saber a quien le paso las cartas, tengo que sumar la variable de pasaje a la posicion del jugador actual, y a eso dividirlo por la cantidad de jugadores
+			int posicionJugadorPasaje = (posicionJugadorActual + valor + jugadores.length) % jugadores.length;
+		
+			//Creo la lista de las cartas que se van a pasar al otro jugador
+			Carta[] cartasIntercambio = new Carta[cantCartasIntercambio];
+			
+			for (int i = 0; i < cantCartasIntercambio; i++) {
+				//Obntego la carta que jugo el jugador
+				notificar(EventosCorazones.PEDIR_CARTA_PASAJE);
+				cartasIntercambio[i] = this.cartaAJugar;
+			}
+			
+			//Guardo en el arreglo (POR POSICION DE JUGADOR) las cartas nuevas obtenidas
+			arregloDeCartasAIntercambiar.set(posicionJugadorPasaje, cartasIntercambio);
+			
+			turno = (turno + 1) % jugadores.length; //Obtengo el siguiente jugador	
+		}
+		
+		otorgarCartasJugadores(arregloDeCartasAIntercambiar);
+	}
+	
+	//Metodo que busca la posicion de un jugador determinado
+	private int buscarJugador(Jugador jugador) {
+		int posicionJugadorBuscar = 0;
+		boolean encontrado = false;
+		while (!encontrado && posicionJugadorBuscar < jugadores.length){
+	        if (jugadores[posicionJugadorBuscar] == jugador) {
+	            encontrado = true;
+	        } else {
+	        	posicionJugadorBuscar++;
+	        }
+	    }
+		return posicionJugadorBuscar;
+	}
+	
+	//Otorgo las cartas que se pasaron a cada jugador
+	private void otorgarCartasJugadores(ArrayList<Carta[]> cartasPasaje) {
+		for (int i = 0; i < cantJugadores; i++) {
+			for(int j = 0; j < cantCartasIntercambio; j++) {
+				jugadores[i].recibirCarta(cartasPasaje.get(i)[j]);
+			}
+		}
+	}
 
 	
 	// *************************************************************
@@ -239,6 +341,21 @@ public class Corazones implements Observable{
 	public String getRonda() {
 		return String.valueOf(this.ronda);
 	}
+	
+	//Getter que me dice direccion y cuantas cartas se van a pasar
+	public String getDireccionPasaje() {
+		String s = "No hay pasaje de cartas";
+		if (this.direccion != null) {
+			s = "Las cartas se pasan en la siguiente direccion: " + this.direccion.toString() + "\n";
+			s += "Cantidad de cartas a pasar: " + this.getCantCartasPasaje();
+		}
+		return s;
+		
+	}
+	
+	public String getCantCartasPasaje() {
+		return String.valueOf(cantCartasIntercambio);
+	}
 
 	
 	// *************************************************************
@@ -256,5 +373,7 @@ public class Corazones implements Observable{
 	public void agregarObservador(Observador observador) {
 		this.observadores.add(observador);
 	}
+
+
 }
 

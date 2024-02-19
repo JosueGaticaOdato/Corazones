@@ -71,7 +71,11 @@ public class Controlador implements Observador{
 
 	public String numeroRonda() {
 		return this.modelo.getRonda();
-	}	
+	}
+
+	public String direccionPasaje() {
+		return this.modelo.getDireccionPasaje();
+	}
 	
 	// *************************************************************
 	//                    DESDE MODELO A VISTA
@@ -79,7 +83,6 @@ public class Controlador implements Observador{
 	
 	@Override
 	public void actualizar(Object evento, Observable observado) {
-		// TODO Auto-generated method stub
 		if (evento instanceof EventosCorazones) {
 			switch ((EventosCorazones) evento) {
 			case PEDIR_CARTA:
@@ -94,9 +97,17 @@ public class Controlador implements Observador{
 			case JUGO_2_DE_TREBOL:
 				this.vista.jugador2deTrebol();
 				break;
+			case PASAJE_DE_CARTAS:
+				this.vista.pasajeDeCartas();
+				break;
+			case PEDIR_CARTA_PASAJE:
+				this.vista.pedirCartaPasaje();
+				break;
 		}}
 		
 	}
+
+
 
 
 }
