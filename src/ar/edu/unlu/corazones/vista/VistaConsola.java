@@ -201,7 +201,7 @@ public class VistaConsola implements IVista {
 				+ this.controlador.jugadorActual()); //Digo quien tiene que jugar
 		continuar();
 		System.out.println("---------- JUGADOR - " + this.controlador.jugadorActual() + " -------------");
-		System.out.println(this.controlador.mostrarCartasPosiblesATirar());
+		System.out.println(this.controlador.mostrarCartasPosiblesATirarPasaje());
 		System.out.println("Elija una carta");
 		int posCarta = entrada.nextInt();
 		controlador.cartaJugadaPasaje(posCarta - 1); //Paso la carta

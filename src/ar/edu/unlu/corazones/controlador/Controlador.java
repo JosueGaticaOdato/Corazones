@@ -81,6 +81,11 @@ public class Controlador implements Observador{
 		this.modelo.jugarCartaPasaje(i);
 	}
 	
+	public String mostrarCartasPosiblesATirarPasaje() {
+		return this.modelo.cartasPosiblesAJugarPasaje();
+	}
+
+	
 	// *************************************************************
 	//                    DESDE MODELO A VISTA
 	// *************************************************************
@@ -113,6 +118,7 @@ public class Controlador implements Observador{
 		}}
 		
 	}
+
 
 
 

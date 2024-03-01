@@ -13,7 +13,7 @@ public class Corazones implements Observable{
 	// *************************************************************
 	
 	private static final int cantCartasRepartidas = 13; //TESTING
-	private static final int cantCartasIntercambio = 1; //TESTING
+	private static final int cantCartasIntercambio = 3; //TESTING
 	private static final int puntajeMaximo = 12; //TESTING
 	private static final int cantJugadores = 4;
 	
@@ -107,7 +107,7 @@ public class Corazones implements Observable{
 				turno = jugada.determinarPerdedor();
 				notificar(EventosCorazones.GANADOR_JUGADA);
 			}
-			//Finalizada la ronda, se comprueba si se llego al puntaje maxio para finalizar el juego
+			//Finalizada la ronda, se comprueba si se llego al puntaje maxixo para finalizar el juego
 			if (puntajeMaximoActual() >= puntajeMaximo) {
 				juegoTerminado = true; 
 			}
@@ -306,6 +306,11 @@ public class Corazones implements Observable{
 	//Metodo para jugar la carta cuando se realize el pasaje
 	public void jugarCartaPasaje(int i) {
 		cartaAJugar = jugadores[turno].tirarCarta(i);
+	}
+	
+	//Metodo que me dice las cartas que puede jugar el jugador
+	public String cartasPosiblesAJugarPasaje() {
+		return jugadores[turno].cartasJugables(null);
 	}
 	
 	// *************************************************************

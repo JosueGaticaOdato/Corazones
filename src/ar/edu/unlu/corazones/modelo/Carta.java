@@ -48,6 +48,7 @@ public class Carta {
 			break;
 		case 1:
 			this.valorTexto = "A";
+			this.valor = 14; //Paso a 14 porque es la mas grande
 			break;
 		default:
 			this.valorTexto = String.valueOf(this.valor);
@@ -64,11 +65,11 @@ public class Carta {
 		return palo;
 	}
 
-	//Getter para obtener el valor del palo de la carta
+	//Getter para obtener el valor de la carta
 	public int getValor() {
 		return valor;
 	}
-
+	
 	//Getter para obtener el valor (en letra si es el caso) de la carta
 	public String getValorTexto() {
 		return valorTexto;

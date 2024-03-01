@@ -11,24 +11,24 @@ public class Jugada {
 	private final int CORAZONES = 1;
 	private final int OTRAS = 0;
 	
-	private static int contadorJugadas = 0; //Variables estatica que cuenta las jugadas
-	
-	//Numero de ronda
-	private int numeroJugada;
-	
 	//Cartas que puede haber en mesa
 	public final int cartasEnMesa = 4;
 	
 	// *************************************************************
 	//                        ATRIBUTOS
 	// *************************************************************
+	
+	//Variables estatica que cuenta las jugadas
+	private static int contadorJugadas = 0; 
+	
+	//Numero de jugada
+	private int numeroJugada;
 
 	//Vector aparedeado para determinar el jugador con la carta que tiro
 	private Jugador[] jugadores; 
 	private Carta[] cartasJugadas;
 	
 	private Carta primeraCartaJugada;
-	
 	private Jugador jugadorPerdedor;
 	
 	// *************************************************************
@@ -49,7 +49,7 @@ public class Jugada {
 	//Metodo que realiza la tirada de la carta por parte del jugador a la mesa
 	public boolean tirarCartaEnMesa(int turnoProx, Carta cartaEnJuego, boolean puedeTirarOtraCarta) {
 		boolean isCartaValida = false;
-		//Primera caso que la carta sea valida para tirar: Es la primera
+		//Primera caso: Que sea la primera (2 de trebol)
 		if(primeraCarta()) {
 			primeraCartaJugada = cartaEnJuego;
 			isCartaValida = true;
