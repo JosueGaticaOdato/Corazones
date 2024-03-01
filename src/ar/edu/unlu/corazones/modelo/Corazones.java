@@ -61,10 +61,10 @@ public class Corazones implements Observable {
 		jugadores = new Jugador[cantJugadores];
 		ronda = 1;
 		// Cargo default
-		agregarJugadores("a");
+		/*agregarJugadores("a");
 		agregarJugadores("b");
 		agregarJugadores("c");
-		agregarJugadores("d");
+		agregarJugadores("d");*/
 
 		this.observadores = new ArrayList<>();
 		this.jugadas = new ArrayList<>();
@@ -84,7 +84,6 @@ public class Corazones implements Observable {
 
 	public void iniciarJuego() {
 		boolean juegoTerminado = false;
-
 		while (!juegoTerminado) {
 			mazo = new Mazo();
 			repartirCartas();
@@ -133,6 +132,15 @@ public class Corazones implements Observable {
 		// Fin del juego, determino al ganador
 		determinarGanador();
 		notificar(EventosCorazones.FIN_DE_JUEGO);
+	}
+
+	//Metodo que me dice si es posible iniciar el juego con esa cantidad de jugadores
+	public boolean cantidadDeJugadoresValida() {
+		int jugadorValido = 0;
+		for (int i = 0; i < jugadores.length; i++) {
+			if (jugadores[i] != null) { jugadorValido++;}
+		}
+		return (jugadorValido == cantJugadores);
 	}
 
 	// Metodo para indicar que un jugador tiro la carta de corazones
@@ -231,13 +239,17 @@ public class Corazones implements Observable {
 		}
 	}
 
+	// *************************************************************
+	// 						ALTA Y MODIFICACION
+	// *************************************************************
+	
 	// Metodo que agrega jugadores al juego,segun lo que devuelva indica si se cargo
 	// de forma correcta o no el jugador
 	// true = se cargo - false = no se cargo porque ya estan todos los jugadores
 	// Metodo que agrega jugadores al juego,segun lo que devuelva indica si se cargo
 	// de forma correcta o no el jugador
 	// true = se cargo - false = no se cargo porque ya estan todos los jugadores
-	private boolean agregarJugadores(String nombre) {
+	public boolean agregarJugadores(String nombre) {
 		boolean hayEspacio = false;
 		int pos = 0;
 		while (!hayEspacio && pos < jugadores.length) {
@@ -249,6 +261,20 @@ public class Corazones implements Observable {
 			}
 		}
 		return hayEspacio;
+	}
+	
+	//Metodo que modifica un jugador en el juego
+	//Solamente modifica si existe un jugador en la posicion que quiere
+	//modificar el usuario, sino no lo hace
+	public boolean reemplazarJugadores(String nombre,int posicion) {
+		boolean seReemplazo = false;
+		//Chequeo si no hay ningun jugador, o el referencial apunta a nulo
+		if (!(jugadores[posicion - 1] == null)){
+			//Cambia la bandera y modifico al jugador
+			seReemplazo = true;
+			jugadores[posicion - 1].setNombre(nombre);
+		}
+		return seReemplazo;
 	}
 
 	// *************************************************************
@@ -438,6 +464,20 @@ public String getDireccionPasaje() {
 		return this.corazonesRotos;
 	}
 
+	public String getJugadores() {
+		String s = "\n";
+		for (int i = 0; i < jugadores.length; i++) {
+			s += (i+1) + ") Jugador: "; 
+			if (jugadores[i] == null) {
+				s += "(Sin agregar)";
+			} else {
+				s += jugadores[i].getNombre();
+			}
+			s += "\n";
+		}
+		return s;
+	}
+	
 	// *************************************************************
 	//					 MVC Y OBSERVER
 	// *************************************************************
@@ -457,5 +497,7 @@ public String getDireccionPasaje() {
 	public void agregarObservador(Observador observador) {
 		this.observadores.add(observador);
 	}
+
+
 
 }

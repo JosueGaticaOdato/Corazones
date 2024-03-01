@@ -64,14 +64,13 @@ public class VistaConsola implements IVista {
 			int opcion = this.entrada.nextInt();
 			switch (opcion) {
 				case 1: //Crear jugador
-					//nuevoJugador();
+					nuevoJugador();
 					break;
 				case 2: //Modificar jugador por posicion
-					//modificarJugador();
+					modificarJugador();
 					break;
 				case 3: //Mostrar lista de jugadores 
-					System.out.println("Lista de jugadores:");
-					//System.out.println(controlador.listaJugadores());
+					listaJugadores();
 					break;
 				case 4: //Comenzar juego
 					jugar();
@@ -86,7 +85,7 @@ public class VistaConsola implements IVista {
 			continuar();
 		}
 	}
-	
+
 	//Metodo para continuar y no sacar la pantalla de una
 	private void continuar() {
 		System.out.println("Escriba cualquier tecla para continuar...");
@@ -104,13 +103,62 @@ public class VistaConsola implements IVista {
 	}
 	
 	// *************************************************************
+	//                         ALTA
+	// *************************************************************
+	
+	private void nuevoJugador() {
+		if (!this.controlador.cantidadJugadoresValida()) {
+			System.out.println("\n" + "---------- NUEVO JUGADOR! -------------" + "\n");
+			System.out.println("Ingrese el nombre del nuevo jugador: ");
+			String nombre = entrada.next();
+			this.controlador.agregarJugador(nombre);
+		} else {
+			System.out.println("\n" + "Ya estan todos los jugadores inscriptos" + "\n");
+		}
+	}
+	
+	// *************************************************************
+	//                     MODIFICACION
+	// *************************************************************
+
+	private void modificarJugador() {
+		listaJugadores();
+		System.out.println("Por favor, ingrese el numero de jugador que quiere modificar:");
+		int pos = entrada.nextInt();
+		System.out.println("Por favor, ingrese el numero del nuevo jugador:");
+		String nombre = entrada.next();
+		boolean creado = controlador.modificarJugador(nombre, pos);
+		if (creado) {
+			//modificar jugador devuelve verdadero si se pudo modificar
+			System.out.println("Jugador modificado con exito!");
+		} else {
+			//devuelve falso en el caso de que sea lo contrario
+			System.out.println("No se pudo modificar el jugador.");
+		}
+		
+	}
+
+	// *************************************************************
+	//                 LISTA DE JUGADORES
+	// *************************************************************
+
+	private void listaJugadores() {
+		System.out.println("\n" + "Lista de jugadores:");
+		System.out.println(controlador.listaJugadores());
+	}
+	
+	// *************************************************************
 	//                         JUGAR
 	// *************************************************************
 	
 	private void jugar() {
-		System.out.println("Juego comenzado!");
-		continuar();
-		controlador.comenzarJuego();
+		if (this.controlador.cantidadJugadoresValida()) {
+			System.out.println("Juego comenzado!");
+			continuar();
+			controlador.comenzarJuego();
+		} else {
+			System.out.println("Faltan jugadores para comenzar el juego");
+		}		
 	}
 	
 	private void combinacionRondaJugada() {

@@ -89,6 +89,23 @@ public class Controlador implements Observador{
 		return this.modelo.getCorazonesRotos();
 	}
 	
+	public String listaJugadores() {
+		return this.modelo.getJugadores();
+	}
+	
+	public void agregarJugador(String nombre) {
+		this.modelo.agregarJugadores(nombre);
+	}
+	
+	public boolean cantidadJugadoresValida() {
+		return this.modelo.cantidadDeJugadoresValida();
+	}
+	
+	public boolean modificarJugador(String nombre, int pos) {
+		return this.modelo.reemplazarJugadores(nombre, pos);
+	}
+
+	
 	// *************************************************************
 	//                    DESDE MODELO A VISTA
 	// *************************************************************
