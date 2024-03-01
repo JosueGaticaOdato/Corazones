@@ -46,21 +46,48 @@ public class Jugada {
 	//                       COMPORTAMIENTO
 	// *************************************************************
 	
-	//Metodo que realiza la tirada de la carta por parte del jugador a la mesa
-	public boolean tirarCartaEnMesa(int turnoProx, Carta cartaEnJuego, boolean puedeTirarOtraCarta) {
-		boolean isCartaValida = false;
-		//Primera caso: Que sea la primera (2 de trebol)
+	public boolean tirarCartaEnMesa(int turnoProx, Carta cartaEnJuego, boolean puedeTirarOtraCarta, boolean corazonesRotos) {
+		boolean isCartaValida = true;
+		//Si es la primera carta, existes dos casos
 		if(primeraCarta()) {
-			primeraCartaJugada = cartaEnJuego;
-			isCartaValida = true;
+			//El primero, que sea cualquier carta que no sea de corazones
+			//El segundo, que sea una carta de corazones y quiera iniciar jugada sin que esten los corazones rotos
+			if(cartaEnJuego.getPalo() == Palo.CORAZONES && !corazonesRotos) {
+				isCartaValida = false;
+			}else {primeraCartaJugada = cartaEnJuego;}
+		}
+		//El en caso de que no se la primera carta, analizo si la carta que tiro es
+		//del mismo palo de la que esta en la mesa, o si puede tirar otra carta de su mano 
+		else if ((puedeTirarOtraCarta) && (cartaEnJuego.getPalo() != primeraCartaJugada.getPalo())){
+			isCartaValida = false;
+		}
+		
+		if (isCartaValida){
+			this.cartasJugadas[turnoProx] = cartaEnJuego;
+		}
+		
+		return isCartaValida;
+	}
+	
+	//Metodo que realiza la tirada de la carta por parte del jugador a la mesa
+	/**public boolean tirarCartaEnMesa(int turnoProx, Carta cartaEnJuego, boolean puedeTirarOtraCarta, boolean corazonesRotos) {
+		boolean isCartaValida = false;
+		//Primera caso: Que sea la primera de la jugada
+		if(primeraCarta()) {
+			if (cartaEnJuego.getPalo() == Palo.CORAZONES && !corazonesRotos) { //Solo puede arrancar jugadas con corazones si los corazones estan activos
+				isCartaValida = false;
+			} else {
+				primeraCartaJugada = cartaEnJuego;
+				isCartaValida = true;
+			}
 		}
 		//Segundo caso para que la carta sea valida: tiene que ser del mismo palo o no le queda otra del mismo palo
-		if(cartaEnJuego.getPalo() == primeraCartaJugada.getPalo() || isCartaValida || (!puedeTirarOtraCarta)) {
+		if(primeraCartaJugada.getPalo() == null || cartaEnJuego.getPalo() == primeraCartaJugada.getPalo() || isCartaValida || (!puedeTirarOtraCarta) || corazonesRotos) {
 			this.cartasJugadas[turnoProx] = cartaEnJuego;
 			isCartaValida = true;
 		}
 		return isCartaValida;
-	}
+	}**/
 	
 	//Metodo que determina si es la primera carta jugada: Es fundamental ya que el palo de esta determinada cual es la carta mas alta
 	private boolean primeraCarta() {

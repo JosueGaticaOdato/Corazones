@@ -84,7 +84,10 @@ public class Controlador implements Observador{
 	public String mostrarCartasPosiblesATirarPasaje() {
 		return this.modelo.cartasPosiblesAJugarPasaje();
 	}
-
+	
+	public boolean isCorazonesRotos() {
+		return this.modelo.getCorazonesRotos();
+	}
 	
 	// *************************************************************
 	//                    DESDE MODELO A VISTA
@@ -115,13 +118,15 @@ public class Controlador implements Observador{
 			case CARTA_TIRADA_INCORRECTA:
 				this.vista.cartaTiradaIncorrecta();
 				break;
+			case CARTA_TIRADA_INCORRECTA_CORAZONES:
+				this.vista.cartaTiradaIncorrectaCorazones();
+				break;
+				
+			case CORAZONES_ROTOS:
+				this.vista.corazonesRotos();
+				break;
 		}}
 		
 	}
-
-
-
-
-
 
 }

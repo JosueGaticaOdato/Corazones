@@ -45,6 +45,9 @@ public class Corazones implements Observable{
 	//Posicion del jugador ganador
 	private int posJugadorGanador;
 	
+	//Funcionalidad corazones rotos
+	private boolean corazonesRotos;
+	
 	//Lista de observadores
 	private List<Observador> observadores;
 		
@@ -80,29 +83,38 @@ public class Corazones implements Observable{
 
 	public void iniciarJuego() {
 		boolean juegoTerminado = false;
+		
 		while (!juegoTerminado) {
 			mazo = new Mazo();
 			repartirCartas();
 			//pasajeDeCartas();
+			this.corazonesRotos = false;
 			for (int j = 0; j < cantCartasRepartidas; j++) { //Abarco las 13 jugadas de esta ronda
 				int i = 0;
 				Jugada jugada = new Jugada(this.jugadores);
 				jugadas.add(jugada);
+				
 				if (j == 0) { //Primer jugada, donde se inicia con el 2 de trebol
 					primercarta2Trebol(jugada);
 					i++; //Aumento i porque ya jugo uno de los jugadores
 				}
+				
 				while (i < jugadores.length) { //Recorro todos los jugadores
 					notificar(EventosCorazones.PEDIR_CARTA);
-					boolean tieneOtraCartaParaJugar = jugadores[turno].tieneCartasDelMismoPalo(jugada.getPrimeraCarta());
-					if (jugada.tirarCartaEnMesa(turno, cartaAJugar,tieneOtraCartaParaJugar)) { //Si jugo la carta correcta
+					boolean tieneOtraCartaParaJugar = false;
+					if (!this.corazonesRotos) {
+						tieneOtraCartaParaJugar = jugadores[turno].tieneCartasDelMismoPalo(jugada.getPrimeraCarta());
+					}
+					if (jugada.tirarCartaEnMesa(turno, cartaAJugar,tieneOtraCartaParaJugar, this.corazonesRotos)) { //Si jugo la carta correcta
 						jugadores[turno].tirarCarta(jugadores[turno].buscarCarta(cartaAJugar));
+						tiroCorazones();
 						turno = (turno + 1) % jugadores.length; //Obtengo el siguiente jugador	
 						i++;
 					} else {
-						notificar(EventosCorazones.CARTA_TIRADA_INCORRECTA);
+						tiroCartaIncorrecta();
 					}
 				}
+				
 				//Determino el perdedor de esta jugada, obteniendo el siguiente a jugar
 				turno = jugada.determinarPerdedor();
 				notificar(EventosCorazones.GANADOR_JUGADA);
@@ -119,6 +131,23 @@ public class Corazones implements Observable{
 		notificar(EventosCorazones.FIN_DE_JUEGO);
 	}
 	
+	private void tiroCorazones() {
+		if (cartaAJugar.getPalo() == Palo.CORAZONES && !this.corazonesRotos) {
+			notificar(EventosCorazones.CORAZONES_ROTOS);
+			this.corazonesRotos = true;
+		}
+	}
+	
+	private void tiroCartaIncorrecta() {
+		if (cartaAJugar.getPalo() == Palo.CORAZONES) {
+			notificar(EventosCorazones.CARTA_TIRADA_INCORRECTA_CORAZONES);
+		}
+		else {
+			notificar(EventosCorazones.CARTA_TIRADA_INCORRECTA);
+		}
+	}
+	
+
 	//Obtener puntaje maximo de jugadores (para comprobar si supero el max establecido)
 	private int puntajeMaximoActual() {
 		int max = 0;
@@ -154,7 +183,7 @@ public class Corazones implements Observable{
     		if (dosTrebol != -1) {
     			encontrado = true;
     			turno = pos;
-    			jugada.tirarCartaEnMesa(turno, jugadores[pos].tirarCarta(dosTrebol), false); //Tira el 2 de trebol
+    			jugada.tirarCartaEnMesa(turno, jugadores[pos].tirarCarta(dosTrebol), false, this.corazonesRotos); //Tira el 2 de trebol
     			notificar(EventosCorazones.JUGO_2_DE_TREBOL);
     			turno = (turno + 1) % jugadores.length;;
     		} else {
@@ -165,7 +194,7 @@ public class Corazones implements Observable{
 	
 	//Metodo que me dice las cartas que puede jugar el jugador
 	public String cartasPosiblesAJugar() {
-		return jugadores[turno].cartasJugables(jugadas.get(jugadas.size() - 1).getPrimeraCarta());
+		return jugadores[turno].cartasJugables(jugadas.get(jugadas.size() - 1).getPrimeraCarta(), this.corazonesRotos);
 	}
 	
 	//Metodo para guardar la carta que va a ser jugada en mesa
@@ -310,7 +339,7 @@ public class Corazones implements Observable{
 	
 	//Metodo que me dice las cartas que puede jugar el jugador
 	public String cartasPosiblesAJugarPasaje() {
-		return jugadores[turno].cartasJugables(null);
+		return jugadores[turno].cartasJugables(null,this.corazonesRotos);
 	}
 	
 	// *************************************************************
@@ -371,8 +400,15 @@ public class Corazones implements Observable{
 	public String getCantCartasPasaje() {
 		return String.valueOf(cantCartasIntercambio);
 	}
-
 	
+	public boolean getCorazonesRotos() {
+		return this.corazonesRotos;
+	}
+	
+	// *************************************************************
+	//                    MVC Y OBSERVER
+	// *************************************************************
+
 	// *************************************************************
 	//                      	OBSERVER
 	// *************************************************************	
@@ -388,6 +424,8 @@ public class Corazones implements Observable{
 	public void agregarObservador(Observador observador) {
 		this.observadores.add(observador);
 	}
+
+
 
 
 

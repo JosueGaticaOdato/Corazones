@@ -96,17 +96,17 @@ public class Jugador {
     }
     
     //Metodo que me dice cuales cartas puede tirar el jugador en la mesa
-    public String cartasJugables(Carta primeraCarta) {
+    public String cartasJugables(Carta primeraCarta, boolean  corazonesRotos) {
 		String s = "";
 		//Si la primer carta es nula o no tiene otra carta del mismo palo por jugar, muestro mano completa
-		if (primeraCarta == null || !tieneCartasDelMismoPalo(primeraCarta)) {
+		if (primeraCarta == null || !tieneCartasDelMismoPalo(primeraCarta) || corazonesRotos) {
 			s = mostrarMano();
 		} else {
 		for (int i = 0; i < mano.size() ; i++){
 			Carta carta = mano.get(i);
 			s += (i+1) + ") " + carta.mostrarCarta();
 			//Si son de distinto palo, no la puede tirar
-			if (carta.getPalo() != primeraCarta.getPalo()) {
+			if (carta.getPalo() != primeraCarta.getPalo()){
 				s += " X";
 			}
 			s += "\n";

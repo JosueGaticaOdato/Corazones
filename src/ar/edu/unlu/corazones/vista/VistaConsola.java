@@ -124,9 +124,11 @@ public class VistaConsola implements IVista {
 				+ this.controlador.jugadorActual()); //Digo quien tiene que jugar
 		continuar();
 		combinacionRondaJugada();
-		System.out.println("---------- JUGADOR #" + this.controlador.jugadorActual() + " -------------");
+		System.out.println("---------- JUGADOR #" + this.controlador.jugadorActual() + " -------------" + "\n");
 		System.out.println("---------- CARTAS EN MESA -------------");
 		System.out.println(this.controlador.cartasEnMesa());
+		if (this.controlador.isCorazonesRotos()) {
+			System.out.println("---------- CORAZONES ROTOS -------------"  + "\n");}
 		System.out.println(this.controlador.mostrarCartasPosiblesATirar());
 		System.out.println("Con (X), las cartas que NO se puede jugar en esta mesa");
 		System.out.println("Elija una carta");
@@ -209,6 +211,16 @@ public class VistaConsola implements IVista {
 	}
 	
 	// *************************************************************
+	//               CORAZONES ROTOS
+	// *************************************************************
+	
+	public void corazonesRotos() {
+		System.out.println("\n" + "CORAZONES ROTOS");
+		System.out.println("A partir de ahora se pueden tirar cartas de cualquier palo" + "\n");
+		continuar();
+	}
+	
+	// *************************************************************
 	//               CARTA TIRADA INCORRECTA
 	// *************************************************************
 	
@@ -217,11 +229,24 @@ public class VistaConsola implements IVista {
 		System.out.println("Repite tu jugada...");
 		continuar();
 	}
+	
+	public void cartaTiradaIncorrectaCorazones() {
+		System.out.println("No puedes tirar esa carta ya que aun no estan los corazones rotos.");
+		System.out.println("Repite tu jugada...");
+		continuar();
+	}
+	
+
+
 
 	//Metodo que setea el controlador
 	@Override
 	public void setControlador(Controlador controlador) {
 		this.controlador = controlador;
 	}
+
+	
+
+
 
 }
