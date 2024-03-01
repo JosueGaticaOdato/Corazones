@@ -113,6 +113,11 @@ public class VistaConsola implements IVista {
 		controlador.comenzarJuego();
 	}
 	
+	private void combinacionRondaJugada() {
+		System.out.println("---------- RONDA #" + this.controlador.numeroRonda() + " -------------");
+		System.out.println("---------- JUGADA #" + this.controlador.numeroJugada() + " -------------");
+	}
+	
 	// *************************************************************
 	//               PEDIR CARTA (para tirar en mesa)
 	// *************************************************************
@@ -151,21 +156,6 @@ public class VistaConsola implements IVista {
 	}
 	
 	// *************************************************************
-	//             	 MOSTRAR GANADOR DEL JUEGO
-	// *************************************************************
-	
-	public void ganadorJuego() {
-		System.out.println("---------- FIN DEL JUEGO -------------");
-		System.out.println(this.controlador.puntajesJugadores() + "\n");
-		System.out.println("El ganador fue " + this.controlador.ganadorJuego());
-	}
-	
-	private void combinacionRondaJugada() {
-		System.out.println("---------- RONDA #" + this.controlador.numeroRonda() + " -------------");
-		System.out.println("---------- JUGADA #" + this.controlador.numeroJugada() + " -------------");
-	}
-	
-	// *************************************************************
 	//               MOSTRAR QUIEN TIRO 2 TREBOL
 	// *************************************************************
 
@@ -198,10 +188,14 @@ public class VistaConsola implements IVista {
 	// *************************************************************
 
 	public void pedirCartaPasaje() {
+		
 		System.out.println("---------- RONDA #" + this.controlador.numeroRonda() + " -------------");
+		System.out.println("---------- PASAJE DE CARTAS -------------"  + "\n");
 		System.out.println("Es el turno del jugador: "
 				+ this.controlador.jugadorActual()); //Digo quien tiene que jugar
 		continuar();
+		System.out.println("---------- RONDA #" + this.controlador.numeroRonda() + " -------------");
+		System.out.println("---------- PASAJE DE CARTAS -------------"  + "\n");
 		System.out.println("---------- JUGADOR - " + this.controlador.jugadorActual() + " -------------");
 		System.out.println(this.controlador.mostrarCartasPosiblesATirarPasaje());
 		System.out.println("Elija una carta");
@@ -236,7 +230,29 @@ public class VistaConsola implements IVista {
 		continuar();
 	}
 	
+	// *************************************************************
+	//               FIN DE RONDA(PASAJE/JUEGO
+	// *************************************************************
+	
+	public void ganadorJuego() {
+		System.out.println("---------- FIN DEL JUEGO -------------");
+		System.out.println(this.controlador.puntajesJugadores() + "\n");
+		System.out.println("El ganador fue " + this.controlador.ganadorJuego());
+	}
+	
+	public void finDeRonda() { 
+		System.out.println("---------- FINAL DE LA RONDA -------------" + "\n");
+		System.out.println("Asi estan los puntajes hasta el momento" + "\n");
+		System.out.println(this.controlador.puntajesJugadores() + "\n");
+		continuar();
+	}
 
+	public void finPasajeDeCartas() {
+		System.out.println("---------- FIN DEL PASAJE DE CARTAS  -------------");
+		System.out.println("Comienza la ronda");
+		continuar();
+	}
+	
 
 
 	//Metodo que setea el controlador
@@ -244,9 +260,6 @@ public class VistaConsola implements IVista {
 	public void setControlador(Controlador controlador) {
 		this.controlador = controlador;
 	}
-
-	
-
 
 
 }
