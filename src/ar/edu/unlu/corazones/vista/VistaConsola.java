@@ -41,6 +41,7 @@ public class VistaConsola implements IVista {
 	// *************************************************************
 
 	//Menu principal del programa
+	@Override
 	public void mostrarMenu() {
 		System.out.println("         Corazones ");
 		System.out.println();
@@ -170,6 +171,7 @@ public class VistaConsola implements IVista {
 	//               PEDIR CARTA (para tirar en mesa)
 	// *************************************************************
 
+	@Override
 	public void pedirCarta() {
 		//Mostrar cartas en mesa
 		combinacionRondaJugada();
@@ -194,6 +196,7 @@ public class VistaConsola implements IVista {
 	//               MOSTRAR GANADOR DE LA JUGADA
 	// *************************************************************
 	
+	@Override
 	public void mostrarGanadorJugada() {
 		combinacionRondaJugada();
 		System.out.println("---------- CARTAS EN MESA -------------");
@@ -207,6 +210,7 @@ public class VistaConsola implements IVista {
 	//               MOSTRAR QUIEN TIRO 2 TREBOL
 	// *************************************************************
 
+	@Override
 	public void jugador2deTrebol() {
 		//Mostrar cartas en mesa
 		combinacionRondaJugada();
@@ -224,6 +228,7 @@ public class VistaConsola implements IVista {
 	//                    PASAJE DE CARTAS
 	// *************************************************************
 	
+	@Override
 	public void pasajeDeCartas() {
 		System.out.println("---------- RONDA #" + this.controlador.numeroRonda() + " -------------");
 		System.out.println("---------- PASAJE DE CARTAS -------------");
@@ -235,6 +240,7 @@ public class VistaConsola implements IVista {
 	//               PEDIR CARTA (para pasaje)
 	// *************************************************************
 
+	@Override
 	public void pedirCartaPasaje() {
 		
 		System.out.println("---------- RONDA #" + this.controlador.numeroRonda() + " -------------");
@@ -256,6 +262,7 @@ public class VistaConsola implements IVista {
 	//               CORAZONES ROTOS
 	// *************************************************************
 	
+	@Override
 	public void corazonesRotos() {
 		System.out.println("\n" + "CORAZONES ROTOS");
 		System.out.println("A partir de ahora se pueden tirar cartas de cualquier palo" + "\n");
@@ -266,12 +273,14 @@ public class VistaConsola implements IVista {
 	//               CARTA TIRADA INCORRECTA
 	// *************************************************************
 	
+	@Override
 	public void cartaTiradaIncorrecta() {
 		System.out.println("No puedes tirar esa carta ya que no corresponde con el mismo palo de la misma carta tirada");
 		System.out.println("Repite tu jugada...");
 		continuar();
 	}
 	
+	@Override
 	public void cartaTiradaIncorrectaCorazones() {
 		System.out.println("No puedes tirar esa carta ya que aun no estan los corazones rotos.");
 		System.out.println("Repite tu jugada...");
@@ -282,12 +291,14 @@ public class VistaConsola implements IVista {
 	//               FIN DE RONDA(PASAJE/JUEGO
 	// *************************************************************
 	
+	@Override
 	public void ganadorJuego() {
 		System.out.println("---------- FIN DEL JUEGO -------------");
 		System.out.println(this.controlador.puntajesJugadores() + "\n");
 		System.out.println("El ganador fue " + this.controlador.ganadorJuego());
 	}
 	
+	@Override
 	public void finDeRonda() { 
 		System.out.println("---------- FINAL DE LA RONDA -------------" + "\n");
 		System.out.println("Asi estan los puntajes hasta el momento" + "\n");
@@ -295,6 +306,7 @@ public class VistaConsola implements IVista {
 		continuar();
 	}
 
+	@Override
 	public void finPasajeDeCartas() {
 		System.out.println("---------- FIN DEL PASAJE DE CARTAS  -------------");
 		System.out.println("Comienza la ronda");

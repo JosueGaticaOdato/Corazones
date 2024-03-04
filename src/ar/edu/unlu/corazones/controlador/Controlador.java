@@ -4,7 +4,7 @@ import ar.edu.unlu.corazones.modelo.Corazones;
 import ar.edu.unlu.corazones.modelo.EventosCorazones;
 import ar.edu.unlu.corazones.observer.Observable;
 import ar.edu.unlu.corazones.observer.Observador;
-import ar.edu.unlu.corazones.vista.VistaConsola;
+import ar.edu.unlu.corazones.vista.IVista;
 
 /**
  *	CONTROLADOR
@@ -15,13 +15,13 @@ public class Controlador implements Observador{
 	
 	private Corazones modelo;
 	
-	private VistaConsola vista;
+	private IVista vista;
 	
 	// *************************************************************
 	//                       CONSTRUCTOR
 	// *************************************************************
 	
-	public Controlador(Corazones modelo, VistaConsola vista) {
+	public Controlador(Corazones modelo, IVista vista) {
 		this.modelo = modelo;
 		this.vista = vista;
 		this.vista.setControlador(this);
