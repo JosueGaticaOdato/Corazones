@@ -26,6 +26,7 @@ public class Jugador {
 	// *************************************************************
 	//                       CONSTRUCTOR
 	// *************************************************************
+	
 	public Jugador(String nombre, int posicion) {
 		this.nombre = nombre; //Determino el nombre del jugador
 		this.puntaje = 0; //Seteo los puntos en 0
@@ -35,6 +36,7 @@ public class Jugador {
 	// *************************************************************
 	//                       COMPORTAMIENTO
 	// *************************************************************
+	
 	//Metodo que le da las cartas al jugador y las agrega a su mano
 	public void recibirCarta(Carta carta) {
 		mano.add(carta);

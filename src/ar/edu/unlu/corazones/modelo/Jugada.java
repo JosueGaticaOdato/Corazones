@@ -1,5 +1,10 @@
 package ar.edu.unlu.corazones.modelo;
 
+/**
+ * CLASE JUGADA
+ * Aqui se determianara quien es el ganadro de cada jugada y se entregaran las cartas
+ */
+
 public class Jugada {
 	
 	// *************************************************************

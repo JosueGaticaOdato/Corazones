@@ -23,7 +23,7 @@ public class VistaCarta extends JPanel {
 		JLabel lblNumero1 = new JLabel("test1");
 		lblNumero1.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblNumero1.setText(getCarta().getValorTexto());
-		lblNumero1.setBounds(8, 0, 184, 42);
+		lblNumero1.setBounds(4, 13, 1, 1);
 		add(lblNumero1);
 		
 		JLabel lblNumero2 = new JLabel("test2");

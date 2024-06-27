@@ -8,7 +8,7 @@ import ar.edu.unlu.corazones.vista.IVista;
 
 /**
  *	CONTROLADOR
- *	.Encargado de la comunicacion entre la vista y el juego
+ *	.Encargado de la comunicacion entre la vista y el modelo (juego)
  */
 
 public class Controlador implements Observador{
@@ -144,7 +144,6 @@ public class Controlador implements Observador{
 			case CARTA_TIRADA_INCORRECTA_CORAZONES:
 				this.vista.cartaTiradaIncorrectaCorazones();
 				break;
-				
 			case CORAZONES_ROTOS:
 				this.vista.corazonesRotos();
 				break;

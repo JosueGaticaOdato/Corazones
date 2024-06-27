@@ -6,6 +6,12 @@ import java.util.List;
 import ar.edu.unlu.corazones.observer.Observable;
 import ar.edu.unlu.corazones.observer.Observador;
 
+/**
+ * CLASE CORAZONES
+ * Encarga de manejar todo el flujo del juego, que abarca el pasaje de cartas, control de rondas, puntajes, etc.
+ * 
+ */
+
 public class Corazones implements Observable {
 
 	// *************************************************************
@@ -61,10 +67,10 @@ public class Corazones implements Observable {
 		jugadores = new Jugador[cantJugadores];
 		ronda = 1;
 		// Cargo default
-		/*agregarJugadores("a");
-		agregarJugadores("b");
-		agregarJugadores("c");
-		agregarJugadores("d");*/
+		agregarJugadores("Jugador A");
+		agregarJugadores("Jugador B");
+		agregarJugadores("Jugador C");
+		agregarJugadores("Jugador D");
 
 		this.observadores = new ArrayList<>();
 		this.jugadas = new ArrayList<>();
@@ -161,10 +167,8 @@ public class Corazones implements Observable {
 	}
 
 	// Metodo para determinar cual es el puntaje maximo actual de un jugador en el
-	// juego
-
-	// Obtener puntaje maximo de jugadores (para comprobar si supero el max
-	// establecido)
+	// juego. Es necesario obtener ek puntaje maximo de jugadores para comprobar si supero el max
+	// establecido 
 	private int puntajeMaximoActual() {
 		int max = 0;
 		for (Jugador jugadoresCorazones : jugadores) {
@@ -176,7 +180,6 @@ public class Corazones implements Observable {
 	}
 
 	// Metodo que determina quien es el ganador del juego
-	// Metodo que determina quien gano el juego
 	private void determinarGanador() {
 		int minPuntaje = 100;
 		for (int i = 0; i < cantJugadores; i++) {
@@ -187,10 +190,8 @@ public class Corazones implements Observable {
 		}
 	}
 
-	// Metodo para que el jugador que tiene el 2 de trebol tire la carta y comienze
-	// la jugada
 	// *************************************************************
-	// FUNCIONALIDAD JUGADAS
+	// 					FUNCIONALIDAD JUGADAS
 	// *************************************************************
 
 	// Metodo para que el jugador que tiene el 2 de trebol tire la carta
@@ -218,15 +219,12 @@ public class Corazones implements Observable {
 	}
 
 	// Metodo para guardar la carta que va a ser jugada en mesa
-	// Metodo para guardar la carta que va a ser jugada en mesa
 	public void jugarCarta(int i) {
 		cartaAJugar = jugadores[turno].obtenerCarta(i);
 	}
 
-	// Metodo que reparte las cartas a cada jugador, como se hace de forma habitual
-	// 1 1 1 1, 2 2 2 2, 3 3 3 3, etc.
 	// *************************************************************
-	// FUNCIONALIDAD RONDA
+	// 					FUNCIONALIDAD RONDA
 	// *************************************************************
 
 	// Metodo que reparte las cartas a cada jugador, como se hace de forma habitual
@@ -243,9 +241,6 @@ public class Corazones implements Observable {
 	// 						ALTA Y MODIFICACION
 	// *************************************************************
 	
-	// Metodo que agrega jugadores al juego,segun lo que devuelva indica si se cargo
-	// de forma correcta o no el jugador
-	// true = se cargo - false = no se cargo porque ya estan todos los jugadores
 	// Metodo que agrega jugadores al juego,segun lo que devuelva indica si se cargo
 	// de forma correcta o no el jugador
 	// true = se cargo - false = no se cargo porque ya estan todos los jugadores
@@ -279,11 +274,6 @@ public class Corazones implements Observable {
 
 	// *************************************************************
 	// 						PASAJE DE CARTAS
-	// *************************************************************
-
-	// Metodo que determina a donde se van a pasar las cartas
-	// *************************************************************
-	// PASAJE DE CARTAS
 	// *************************************************************
 
 	// Metodo que determina a donde se van a pasar las cartas
@@ -324,7 +314,6 @@ public class Corazones implements Observable {
 	}
 
 	// Metodo privado que realiza el intercambio
-	// Metodo privado que realiza el intercambio
 	private void intercambioDeCartas(int valor) {
 		// Esto funciona para que el intercambio se haga sobre el final y los otros
 		// jugadores no tengan acceso a las cartas nuevas recibidas
@@ -364,7 +353,6 @@ public class Corazones implements Observable {
 	}
 
 	// Metodo que busca la posicion de un jugador determinado
-	// Metodo que busca la posicion de un jugador determinado
 	private int buscarJugador(Jugador jugador) {
 		int posicionJugadorBuscar = 0;
 		boolean encontrado = false;
@@ -378,7 +366,6 @@ public class Corazones implements Observable {
 		return posicionJugadorBuscar;
 	}
 
-	// Otorgo las cartas que se pasaron a cada jugador
 	// Otorgo las cartas que se pasaron a cada jugador
 	private void otorgarCartasJugadores(ArrayList<Carta[]> cartasPasaje) {
 		for (int i = 0; i < cantJugadores; i++) {
@@ -402,22 +389,18 @@ public class Corazones implements Observable {
 	// 						GETTERS
 	// *************************************************************
 
-	// *************************************************************
-	// GETTERS
-	// *************************************************************
-
 	// Muestra el jugador de turno
-public String getJugadorActual() {
+	public String getJugadorActual() {
 		return jugadores[turno].getNombre();
 	}
 
 	// Muestra las cartas que hay en mesa
-public String getCartasEnMesa() {
+	public String getCartasEnMesa() {
 		return this.jugadas.get(jugadas.size() - 1).getCartasJugadas();
 	}
 
 	// Muestra el jugador perdedor de la jugada
-public String getPerdedorJugada() {
+	public String getPerdedorJugada() {
 		return this.jugadas.get(jugadas.size() - 1).getPerdedorJugada();
 	}
 
@@ -436,7 +419,7 @@ public String getPerdedorJugada() {
 	}
 
 	// Metodo que me devuelve al jugador ganador
-public String getGanadorJuego() {
+	public String getGanadorJuego() {
 		return jugadores[this.posJugadorGanador].getNombre();
 	}
 
@@ -446,7 +429,7 @@ public String getGanadorJuego() {
 	}
 	
 	// Getter que me dice direccion y cuantas cartas se van a pasar
-public String getDireccionPasaje() {
+	public String getDireccionPasaje() {
 		String s = "No hay pasaje de cartas";
 		if (this.direccion != null) {
 			s = "Las cartas se pasan en la siguiente direccion: " + this.direccion.toString() + "\n";
@@ -460,10 +443,12 @@ public String getDireccionPasaje() {
 		return String.valueOf(cantCartasIntercambio);
 	}
 
+	//Getter para saber si estan o no los corazones rotos
 	public boolean getCorazonesRotos() {
 		return this.corazonesRotos;
 	}
 
+	//Getter para tener todos los jugadores (en texto)
 	public String getJugadores() {
 		String s = "\n";
 		for (int i = 0; i < jugadores.length; i++) {
@@ -480,10 +465,6 @@ public String getDireccionPasaje() {
 	
 	// *************************************************************
 	//					 MVC Y OBSERVER
-	// *************************************************************
-
-	// *************************************************************
-	// OBSERVER
 	// *************************************************************
 
 	@Override // Notificar los eventos

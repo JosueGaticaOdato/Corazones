@@ -43,13 +43,17 @@ public class VistaConsola implements IVista {
 	//Menu principal del programa
 	@Override
 	public void mostrarMenu() {
-		System.out.println("         Corazones ");
+		System.out.println("******************");
+		System.out.println("*    Corazones   *");
+		System.out.println("******************");
 		System.out.println();
-		System.out.println("Selecciona una opcion");
+		System.out.println("Seleccione una opcion:");
+		System.out.println("----------------------");
 		System.out.println("1 - Crear jugador");
 		System.out.println("2 - Modificar jugador");
 		System.out.println("3 - Ver lista de jugadores");
 		System.out.println("4 - Comenzar juego");
+		System.out.println("----------------------");
 		System.out.println();
 		System.out.println("0 - Salir");
 		System.out.print("Opcion: ");
@@ -63,6 +67,7 @@ public class VistaConsola implements IVista {
 			limpiarPantalla();
 			mostrarMenu();
 			int opcion = this.entrada.nextInt();
+			limpiarPantalla();
 			switch (opcion) {
 				case 1: //Crear jugador
 					nuevoJugador();
@@ -110,7 +115,7 @@ public class VistaConsola implements IVista {
 	private void nuevoJugador() {
 		if (!this.controlador.cantidadJugadoresValida()) {
 			System.out.println("\n" + "---------- NUEVO JUGADOR! -------------" + "\n");
-			System.out.println("Ingrese el nombre del nuevo jugador: ");
+			System.out.print("Ingrese el nombre del nuevo jugador: ");
 			String nombre = entrada.next();
 			this.controlador.agregarJugador(nombre);
 		} else {
@@ -124,9 +129,9 @@ public class VistaConsola implements IVista {
 
 	private void modificarJugador() {
 		listaJugadores();
-		System.out.println("Por favor, ingrese el numero de jugador que quiere modificar:");
+		System.out.print("Por favor, ingrese el numero de jugador que quiere modificar: ");
 		int pos = entrada.nextInt();
-		System.out.println("Por favor, ingrese el numero del nuevo jugador:");
+		System.out.print("Por favor, ingrese el numero del nuevo jugador: ");
 		String nombre = entrada.next();
 		boolean creado = controlador.modificarJugador(nombre, pos);
 		if (creado) {
