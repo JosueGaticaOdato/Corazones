@@ -18,9 +18,9 @@ public class Corazones implements Observable {
 	// 						CONSTANTES
 	// *************************************************************
 
-	private static final int cantCartasRepartidas = 13; // TESTING
-	private static final int cantCartasIntercambio = 3; // TESTING
-	private static final int puntajeMaximo = 12; // TESTING
+	private static final int cantCartasRepartidas = 13; // TESTING (REAL 13)
+	private static final int cantCartasIntercambio = 0; // TESTING (REAL 3)
+	private static final int puntajeMaximo = 12; // TESTING (REAL 100)
 	private static final int cantJugadores = 4;
 
 	// *************************************************************
