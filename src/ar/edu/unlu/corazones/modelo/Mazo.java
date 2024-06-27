@@ -102,7 +102,7 @@ public class Mazo {
 	//                       GETTERS
 	// *************************************************************
 	
-	//Mostrar contenido del mazo
+	//Mostrar contenido del mazo 
 	public String mostrarMazo() {
 		String texto = "";
 		for (int i = 0; i < (this.tope + 1); i++) {

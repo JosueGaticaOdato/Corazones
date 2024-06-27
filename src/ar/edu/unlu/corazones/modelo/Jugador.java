@@ -41,15 +41,6 @@ public class Jugador {
 	public void recibirCarta(Carta carta) {
 		mano.add(carta);
 	}
-
-	//Metodo que muestra la mano del jugador
-	public String mostrarMano() {
-		String s = "";
-		for (int i = 0; i < mano.size() ; i++){
-			s += (i+1) + ") " + mano.get(i).mostrarCarta() + "\n";
-		 }
-		return s;
-	}
 	
 	//Tirar carta a traves de la posicion
 	public Carta tirarCarta(int posCarta) {
@@ -144,6 +135,19 @@ public class Jugador {
 	// *************************************************************
 	//                      GETTERS
 	// *************************************************************
+	
+	//Metodo que muestra la mano del jugador
+	public String mostrarMano() {
+		String s = "";
+		for (int i = 0; i < mano.size() ; i++){
+			s += (i+1) + ") " + mano.get(i).mostrarCarta() + "\n";
+		 }
+		return s;
+	}
+	
+	/*public ArrayList<Carta> mostrarMano(){
+		return this.mano;
+	}*/
 	
 	//Obtener carta a traves de la posicion
 	public Carta obtenerCarta(int posCarta) {
