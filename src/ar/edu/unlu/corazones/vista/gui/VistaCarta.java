@@ -17,7 +17,7 @@ public class VistaCarta extends JPanel {
 	
 
 	/**
-	 * Create the panel.
+	 * Constructor donde se crea la vista de la carta
 	 */
 	
 	public VistaCarta(Carta carta) {
@@ -25,16 +25,19 @@ public class VistaCarta extends JPanel {
 		this.carta = carta;
 		setLayout(new BorderLayout());
 
+		//Toma el numero de la carta
 		JLabel lblValorCartaArriba = new JLabel(getCarta().getValorTexto());
 		lblValorCartaArriba.setFont(new Font("Tahoma", Font.BOLD, 22));
 		lblValorCartaArriba.setHorizontalAlignment(SwingConstants.LEFT);
         add(lblValorCartaArriba, BorderLayout.NORTH);
 		
+        //Toma el numero de la carta
 		JLabel lblValorCartaAbajo = new JLabel(getCarta().getValorTexto());
 		lblValorCartaAbajo.setFont(new Font("Tahoma", Font.BOLD, 22));
 		lblValorCartaAbajo.setHorizontalAlignment(SwingConstants.RIGHT);
         add(lblValorCartaAbajo, BorderLayout.SOUTH);;
 		
+        //Muestra como imagen en palo de la carta, buscando la url relativa a la imagen.
 		JLabel lblValorCartaTipo = new JLabel();
 		lblValorCartaTipo.setIcon(new ImageIcon(VistaCarta.class.getResource("/ar/edu/unlu/corazones/img/"+getCarta().getPalo().toString()+".png")));
 		lblValorCartaTipo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -42,7 +45,10 @@ public class VistaCarta extends JPanel {
 
 	}
 
-
+	// *************************************************************
+	//                       GETTERS y SETTERS
+	// *************************************************************
+	
 	public Carta getCarta() {
 		return carta;
 	}

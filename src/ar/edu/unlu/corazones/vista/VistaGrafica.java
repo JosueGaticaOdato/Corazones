@@ -17,6 +17,8 @@ import javax.swing.JScrollPane;
 import java.awt.GridLayout;
 import javax.swing.ScrollPaneConstants;
 
+/* Prueba de interfaz grafica */
+
 public class VistaGrafica extends JFrame {
 
 	private static final long serialVersionUID = 1L;
