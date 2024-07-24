@@ -150,7 +150,18 @@ public class VistaConsola implements IVista {
 
 	private void listaJugadores() {
 		System.out.println("\n" + "Lista de jugadores:");
-		System.out.println(controlador.listaJugadores());
+		String[] jugadores = controlador.listaJugadores();
+		String s = "\n";
+		for (int i = 0; i < controlador.cantidadJugadores(); i++) {
+			s += (i+1) + ") Jugador: "; 
+			if (jugadores[i] == null) {
+				s += "(Sin agregar)";
+			} else {
+				s += jugadores[i];
+			}
+			s += "\n";
+		}
+		System.out.println(s);
 	}
 	
 	// *************************************************************

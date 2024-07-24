@@ -449,19 +449,20 @@ public class Corazones implements Observable {
 		return this.corazonesRotos;
 	}
 
-	//Getter para tener todos los jugadores (en texto)
-	public String getJugadores() {
-		String s = "\n";
-		for (int i = 0; i < jugadores.length; i++) {
-			s += (i+1) + ") Jugador: "; 
-			if (jugadores[i] == null) {
-				s += "(Sin agregar)";
-			} else {
-				s += jugadores[i].getNombre();
-			}
-			s += "\n";
+	//Getter para tener todos los jugadores (en texto)	
+	public String[] getJugadores()
+	{
+		String[] jugadores =  new String[this.jugadores.length];
+		for (int i = 0; i < this.jugadores.length; i++)
+		{
+			jugadores[i] = this.jugadores[i].getNombre();
+			//System.out.println(this.jugadores[i].getNombre());
 		}
-		return s;
+		return jugadores;
+	}
+	
+	public int cantidadJugadores() {
+		return this.jugadores.length;
 	}
 	
 	// *************************************************************
@@ -479,7 +480,6 @@ public class Corazones implements Observable {
 	public void agregarObservador(Observador observador) {
 		this.observadores.add(observador);
 	}
-
 
 
 }

@@ -89,7 +89,7 @@ public class Controlador implements Observador{
 		return this.modelo.getCorazonesRotos();
 	}
 	
-	public String listaJugadores() {
+	public String[] listaJugadores() {
 		return this.modelo.getJugadores();
 	}
 	
@@ -104,6 +104,11 @@ public class Controlador implements Observador{
 	public boolean modificarJugador(String nombre, int pos) {
 		return this.modelo.reemplazarJugadores(nombre, pos);
 	}
+	
+	public int cantidadJugadores() {
+		return this.modelo.cantidadJugadores();
+	}
+
 
 	
 	// *************************************************************
@@ -150,5 +155,4 @@ public class Controlador implements Observador{
 		}}
 		
 	}
-
 }
