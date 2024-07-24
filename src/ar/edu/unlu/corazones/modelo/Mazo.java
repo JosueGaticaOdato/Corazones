@@ -36,7 +36,7 @@ public class Mazo {
 		this.tope = Cant_Cartas - 1; //[0,1,2,3,4,...51 (tope)]
 		//Creo y barajo el mazo
 		crearMazo();
-		barajarMazo();	
+		//barajarMazo();	
 	}
 	
 	// *************************************************************
@@ -109,5 +109,9 @@ public class Mazo {
 			texto += String.valueOf(i) + ") " + mazo[i].mostrarCarta() + "\n";
 		}
 		return texto;
+	}
+	
+	public Carta[] getMazo() {
+		return this.mazo;
 	}
 }

@@ -288,7 +288,6 @@ public class VistaConsola implements IVista {
 		System.out.println("*   JUGADOR -  " + this.controlador.jugadorActual() + "   *");
 		System.out.println("*                          *");
 		System.out.println("****************************");
-		System.out.println();
 		System.out.println("     	    MANO            ");
 		System.out.println("----------------------------");
 		System.out.print(this.controlador.mostrarCartasPosiblesATirarPasaje());

@@ -215,6 +215,7 @@ public class Corazones implements Observable {
 
 	// Metodo que me dice las cartas que puede jugar el jugador
 	public String cartasPosiblesAJugar() {
+		// Cartas jugables usa como parametro la primera carta que se tiro en la mesa y si los corazones estan rotos o no
 		return jugadores[turno].cartasJugables(jugadas.get(jugadas.size() - 1).getPrimeraCarta(), this.corazonesRotos);
 	}
 
