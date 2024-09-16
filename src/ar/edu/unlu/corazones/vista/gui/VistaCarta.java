@@ -19,27 +19,42 @@ import javax.swing.ImageIcon;
 public class VistaCarta extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
+	private final int ANCHO = 60;
+	private final int ALTO = 90;
+	private final int TAMAÑO_FUENTE = 20;
+	
 	private Carta carta;
 	
 
 	/**
 	 * Constructor donde se crea la vista de la carta
 	 */
-	
 	public VistaCarta(Carta carta) {
-		setBackground(new Color(255, 255, 255));
-		this.carta = carta;
-		setLayout(new BorderLayout());
+		this();
+		setCarta(carta);
+		actualizarVista();
+	}
+	
+	 // Constructor por defecto
+    public VistaCarta() {
+        setBackground(Color.WHITE);
+        setPreferredSize(new Dimension(ANCHO, ALTO)); // Tamaño fijo de la carta
+        setLayout(new BorderLayout());
+    }
+	
+	
+	private void actualizarVista() {
+		removeAll();
 
 		//Toma el numero de la carta
 		JLabel lblValorCartaArriba = new JLabel(getCarta().getValorTexto());
-		lblValorCartaArriba.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblValorCartaArriba.setFont(new Font("Tahoma", Font.BOLD, TAMAÑO_FUENTE));
 		lblValorCartaArriba.setHorizontalAlignment(SwingConstants.LEFT);
         add(lblValorCartaArriba, BorderLayout.NORTH);
 		
         //Toma el numero de la carta
 		JLabel lblValorCartaAbajo = new JLabel(getCarta().getValorTexto());
-		lblValorCartaAbajo.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblValorCartaAbajo.setFont(new Font("Tahoma", Font.BOLD, TAMAÑO_FUENTE));
 		lblValorCartaAbajo.setHorizontalAlignment(SwingConstants.RIGHT);
         add(lblValorCartaAbajo, BorderLayout.SOUTH);;
 		
@@ -49,15 +64,13 @@ public class VistaCarta extends JPanel {
 		lblValorCartaTipo.setHorizontalAlignment(SwingConstants.CENTER);
         add(lblValorCartaTipo, BorderLayout.CENTER);
         
-        setPreferredSize(new Dimension(60, 90)); // Tamaño de la carta
+        revalidate();
+        repaint();
+        
+        //setPreferredSize(new Dimension(60, 90)); // Tamaño de la carta
 
 	}
 	
-	public VistaCarta() 
-	{
-		setBackground(new Color(192, 192, 192));
-		setPreferredSize(new Dimension(60, 90)); // Tamaño de la carta
-	}
 	
     private Image redimensionarImagen(String ruta, int ancho, int alto) {
         try {
